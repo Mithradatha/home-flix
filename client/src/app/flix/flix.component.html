@@ -1,0 +1,25 @@
+<table
+  datatable
+  [dtOptions]="dtOptions"
+  [dtTrigger]="dtTrigger"
+  class="row-border hover"
+>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Provider</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Todo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let flix of flixes">
+      <td scope="row">{{ flix.id }}</td>
+      <td>{{ flix.provider }}</td>
+      <td>{{ flix.name }}</td>
+      <td>{{ flix.type }}</td>
+      <td>{{ flix.todo }}</td>
+    </tr>
+  </tbody>
+</table>
