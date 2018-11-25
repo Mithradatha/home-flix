@@ -6,8 +6,7 @@ import * as cors from 'cors';
 
 class App {
   public app: express.Application;
-  public routes = new RoutesModule();
-  public mongoUrl = 'mongodb://localhost/home-flix';
+  private routes = new RoutesModule();
 
   constructor() {
     this.app = express();
@@ -20,16 +19,23 @@ class App {
     // support application/json type post data
     this.app.use(bodyParser.json());
 
-    //support application/x-www-form-urlencoded post data
+    // support application/x-www-form-urlencoded post data
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
-    this.app.use(cors({ origin: 'http://localhost:4200' }));
+    // allow requests from another site
+    this.app.use(cors({ origin: process.env.CORS_ORIGIN }));
   }
 
   private mongoSetup(): void {
     mongoose.connect(
-      this.mongoUrl,
-      { useNewUrlParser: true }
+      process.env.DB_CONNECTION_STRING,
+      {
+        auth: {
+          user: process.env.DB_USERNAME,
+          password: process.env.DB_PASSWORD
+        },
+        useNewUrlParser: true
+      }
     );
   }
 }
